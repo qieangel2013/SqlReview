@@ -154,9 +154,11 @@ func importToRedis(line string, redis_conf RedisConfType, sql SqlInfo, appconfig
 		sqlexplains.Expl = line
 		sqlexplains.Branch = sql.Branch
 		pos := strings.Index(sql.Dsn, "dbname=")
-		end := strings.Index(sql.Dsn[pos:], "]")
-		if pos != -1 && end != -1 {
-			sqlexplains.Db = sql.Dsn[pos+7 : pos+end]
+		if pos != -1 {
+			end := strings.Index(sql.Dsn[pos:], "]")
+			if end != -1 {
+				sqlexplains.Db = sql.Dsn[pos+7 : pos+end]
+			}
 		}
 		sqlexplains.Route = sql.Route
 		sqlexplains.Arr = append(sqlexplains.Arr, sql)
